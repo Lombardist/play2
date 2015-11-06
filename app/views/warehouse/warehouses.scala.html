@@ -1,0 +1,28 @@
+@import models.entities.Warehouse
+
+@(warehouses: Seq[Warehouse])(implicit lang: Lang, messages: Messages)
+
+@import helper._
+
+@main("The List of Warehouses") {
+
+    <h2>The list of Warehouses</h2>
+
+    <a href="@controllers.company.routes.Companies.newCompany()">New Warehouse</a>
+
+    <table>
+        <tr>
+            <td>Identificator</td>
+            <td>Name</td>
+            <td>Company</td>
+        </tr>
+        @for( warehouse <- warehouses) {
+            <tr>
+                <td>@warehouse._id</td>
+                <td><a href="@controllers.company.routes.Companies.companyJson(warehouse._id)">@warehouse.name</a></td>
+                <td><a href="@controllers.company.routes.Companies.companyJson(warehouse._id)">@warehouse.name</a></td>
+            </tr>
+        }
+    </table>
+
+}

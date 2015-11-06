@@ -1,0 +1,60 @@
+@import controllers.registration.RegistrationForm
+@(registrationForm: Form[RegistrationForm])(implicit lang: Lang, messages: Messages)
+
+@import helper._
+
+@main(messages("registration.title")) {
+
+    @form(action = controllers.registration.routes.Registration.registrationSubmit()) {
+
+        <div class="paramLabel">@messages("registration.company.name")</div>
+        <div class="text-input">
+            <input name="company">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.id")</div>
+        <div class="text-input">
+            <input name="companyId">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.email")</div>
+        <div class="text-input">
+            <input name="email" type="email">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.email")</div>
+        <div class="text-input">
+            <input name="email2" type="email">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.password")</div>
+        <div class="text-input">
+            <input name="password" type="password">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.password2")</div>
+        <div class="text-input">
+            <input name="password2" type="password">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.account.name")</div>
+        <div class="text-input">
+            <input name="name">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.account.lastName")</div>
+        <div class="text-input">
+            <input name="lastName">
+        </div>
+
+        <div class="paramLabel">@messages("registration.company.account.id")</div>
+        <div class="text-input">
+            <input name="accountId">
+        </div>
+
+        <button type="submit">@messages("registration.button.submit")</button>
+        <button href="/companies">@messages("registration.button.cancel")</button>
+
+    }
+
+}

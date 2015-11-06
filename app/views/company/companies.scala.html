@@ -1,0 +1,28 @@
+@import models.entities.Company
+
+@(companies: Seq[Company])(implicit lang: Lang, messages: Messages)
+
+@import helper._
+
+@main("The List of Companies") {
+
+    <h2>The list of Companies</h2>
+
+    <a href="@controllers.company.routes.Companies.newCompany()">New Company</a>
+
+    <table>
+        <tr>
+            <td>@messages("registration.company.id")</td>
+            <td>@messages("registration.company.name")</td>
+            <td>@messages("registration.company.email")</td>
+        </tr>
+        @for( company <- companies) {
+            <tr>
+                <td>@company.identificator</td>
+                <td><a href="@controllers.company.routes.Companies.companyJson(company._id)">@company.name</a></td>
+                <td>@company.email</td>
+            </tr>
+        }
+    </table>
+
+}

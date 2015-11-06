@@ -1,0 +1,14 @@
+application.name = Cloud solutions
+
+#Registration
+registration.title=Registration
+registration.company.name=Company Name
+registration.company.id=Company identificator
+registration.company.email=Registrant Email Address
+registration.company.account.name=Registrant Name
+registration.company.account.lastName=Registrant Lastname
+registration.company.account.id=Registrant identificator number (Passport, Driver licence, etc ...)
+registration.company.password=Password
+registration.company.password2=Repeat password
+registration.button.submit=Register
+registration.button.cancel=Cancel
