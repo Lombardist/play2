@@ -28,4 +28,5 @@ routesGenerator := InjectedRoutesGenerator
 javaOptions ++= Seq(
   "-Dhttps.port=443",
   "-Dhttps.keyStore=conf/cloud-lombard.jks",
-  "-Dhttps.keyStorePassword=Kestroday1987")
+  "-Dhttps.keyStorePassword=Kestroday1987",
+  "-Dhttp.port=80")

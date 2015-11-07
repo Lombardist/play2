@@ -21,4 +21,5 @@ GET         /warehouses.json        @controllers.warehouse.Warehouses.warehouses
 GET         /warehouses             @controllers.warehouse.Warehouses.warehouses
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file           @controllers.Assets.versioned(path="/public", file: Asset)
+#GET         /assets/*file           @controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file                  @controllers.Assets.versioned(path="/public", file: Asset)
