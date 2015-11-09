@@ -1,0 +1,43 @@
+@(form: Form[Login])(implicit lang: Lang, messages: Messages)
+
+<html>
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+
+        <title>@messages("authentication")</title>
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-12">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@messages("login.title2")</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" action="@routes.Authenticator.login()" method="post">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("login.email")" name="email" type="email" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("login.password")" name="password" type="password" value="">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="remember" type="checkbox" value="Remember Me">@messages("login.remember")
+                                        </label>
+                                    </div>
+
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="@messages("login.btn.submin")">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

@@ -1,0 +1,31 @@
+@(title: String)(implicit lang: Lang, messages: Messages)
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
+        <meta charset="UTF-8">
+        <title>@messages("application.name")</title>
+    </head>
+
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-offset-1" style="margin-top: 2em;">
+                    <div class="panel-group">
+                        <a href="@controllers.registration.routes.Registration.registrationView()">
+                            @messages("registration.title")
+                        </a>
+                    </div>
+                    <div class="panel-group">
+                        <a href="@routes.Authenticator.login()">
+                            @messages("login.signin")
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

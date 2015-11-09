@@ -2,13 +2,9 @@
 
 @(companies: Seq[Company])(implicit lang: Lang, messages: Messages)
 
-@import helper._
-
-@main("The List of Companies") {
+@main.main("The List of Companies") {
 
     <h2>The list of Companies</h2>
-
-    <a href="@controllers.company.routes.Companies.newCompany()">New Company</a>
 
     <table>
         <tr>

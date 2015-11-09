@@ -1,16 +1,27 @@
 package controllers.registration
 
+import java.util.UUID
 import javax.inject.Inject
 
-import models.entities.{Company, CompanyDAO}
-import play.api.cache.CacheApi
+import akka.actor.Status.Success
+import cache.CacheGlobal
+import db.DefaultDbConfig
+import helpers.Password
+import models.entities.Company.CompanyDAO
+import models.entities.{Company}
+import models.user.User.UserDAO
+import models.user.{Administrator, User}
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{Action, Controller}
+import play.api.i18n.{Messages, I18nSupport, MessagesApi}
+import play.api.libs.mailer.{AttachmentFile, Email, MailerClient}
+import play.api.mvc.{Request, RequestHeader, Action, Controller}
+
+import scala.concurrent.{ExecutionContext, Future}
+import ExecutionContext.Implicits.global
 
 
-class Registration @Inject()(val messagesApi: MessagesApi, val cacheApi: CacheApi) extends Controller with I18nSupport {
+class Registration @Inject()(val messagesApi: MessagesApi, val mailer: MailerClient) extends Controller with I18nSupport {
 
   val registrationForm: Form[RegistrationForm] = Form(
     mapping(
@@ -30,21 +41,62 @@ class Registration @Inject()(val messagesApi: MessagesApi, val cacheApi: CacheAp
     Ok(views.html.registration.registration(registrationForm))
   }
 
-  def registrationSubmit = Action { implicit request =>
-    val regForm = registrationForm.bindFromRequest.get
-
-    if (regForm.email == regForm.email2 && regForm.email.length > 0 &&
-      regForm.password == regForm.password2 && regForm.password.length > 0 &&
-      regForm.company.length > 0 &&
-      regForm.companyId.length > 0 &&
-      regForm.name.length > 0 &&
-      regForm.lastName.length > 0
-    ) {
-      val company = Company(0, regForm.company, regForm.companyId, regForm.email)
-      CompanyDAO.save(company)
+  def registrationContinue(hash: String) = Action {
+    CompanyDAO.companyByHash(hash) match {
+      case Some(value) => {
+        value.hash = "activated"
+        Ok(views.html.internal.main(value))
+      }
+      case None => {
+        NotFound
+      }
     }
+  }
 
-    Redirect("/companies")
+  def registrationSubmit = Action { implicit request =>
+    val Form = registrationForm.bindFromRequest
+    //TODO: Need tobe re-implemented in future, cause we have to responde with errors
+    Form.fold(
+      hasErrors = { regForm =>
+        Redirect(routes.Registration.registrationView())
+      },
+      success = { regForm =>
+        val company = Company(regForm.company, regForm.companyId, regForm.email)
+        company.hash = UUID.randomUUID().toString
+        val user = User(regForm.name, regForm.lastName, regForm.email, Administrator.name, regForm.email, company._id)
+        user.passwordHash = Password.md5(regForm.password)
+        if (registerNewCompany(company, user)) {
+          Redirect("/")
+        }
+        else
+          Redirect(routes.Registration.registrationView())
+      }
+    )
+  }
+
+  def registerNewCompany(company: Company, user: User)(implicit request: RequestHeader) = CompanyDAO.save(company) match {
+    case Some(value) => UserDAO.save(user) match {
+      case Some(value) => {
+        mailer.send(
+          Email(
+            "Registration",
+            "registration@cloud-lombard.com",
+            Seq(company.email),
+            bodyText = Some("Registration"),
+            bodyHtml = Some(views.html.registration.email(company.hash, Messages("registration.email.body")).body)
+          )
+        )
+        true
+      }
+      case None => {
+        //TODO: Have to think, maybe we need to delete this user
+        false
+      }
+    }
+    case None => {
+      //TODO: Have to think, maybe we need to delete this company
+      false
+    }
   }
 
 }

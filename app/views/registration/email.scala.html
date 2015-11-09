@@ -1,0 +1,17 @@
+@(hash: String, body: String)(implicit requestHeader: RequestHeader)
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+    </head>
+    <body>
+
+        @(body)
+
+        To continue, follow this link:
+        <a href="@controllers.registration.routes.Registration.registrationContinue(hash).absoluteURL()">Continue</a>
+
+    </body>
+</html>

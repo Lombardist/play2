@@ -12,3 +12,13 @@ registration.company.password=Password
 registration.company.password2=Repeat password
 registration.button.submit=Register
 registration.button.cancel=Cancel
+registration.email.body=If you received this email, it means, that you signed up for registration at Cloud-lombard.com. If you want to proceed, please, follow up instructions below.
+
+#Login page
+login.signin=Sign in
+login.title=Authentication
+login.title2=Please Sign in
+login.email=E-Mail
+login.password=Password
+login.remember=Remember me
+login.btn.submin=Login

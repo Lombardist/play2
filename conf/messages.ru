@@ -12,3 +12,13 @@ registration.company.password=Пароль
 registration.company.password2=Пароль повтор
 registration.button.submit=Регистрация
 registration.button.cancel=Отмена
+registration.email.body=Если вы получили это сообщение, значит вы регистрировались на портале Cloud-lombard.com. Для продолжения регистрации, следуйте инструкциям ниже.
+
+#Login page
+login.signin=Войти
+login.title=Авторизация
+login.title2=Пожалуйста авторизируйтесь
+login.email=Электронный адрес
+login.password=Пароль
+login.remember=Запомнить меня
+login.btn.submin=Войти

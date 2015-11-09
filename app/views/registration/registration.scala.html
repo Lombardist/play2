@@ -1,60 +1,70 @@
 @import controllers.registration.RegistrationForm
 @(registrationForm: Form[RegistrationForm])(implicit lang: Lang, messages: Messages)
 
-@import helper._
 
-@main(messages("registration.title")) {
+<html>
+    <head>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap.css")">
 
-    @form(action = controllers.registration.routes.Registration.registrationSubmit()) {
+        <title>@messages("registration.title")</title>
+    </head>
+    <body>
 
-        <div class="paramLabel">@messages("registration.company.name")</div>
-        <div class="text-input">
-            <input name="company">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-12">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@messages("registration.title")</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" action="@controllers.registration.routes.Registration.registrationSubmit()" method="post">
+                                <fieldset>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.name")" name="company">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.id")" name="companyId">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.email")" name="email" type="email">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.email")" name="email2" type="email">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.password")" name="password" type="password">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.password2")" name="password2" type="password">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.account.name")" name="name" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.account.lastName")" name="lastName" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="@messages("registration.company.account.id")" name="accountId" >
+                                    </div>
+
+                                    <input class="btn btn-lg btn-success btn-block" type="submit" value="@messages("registration.button.submit")">
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="paramLabel">@messages("registration.company.id")</div>
-        <div class="text-input">
-            <input name="companyId">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.email")</div>
-        <div class="text-input">
-            <input name="email" type="email">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.email")</div>
-        <div class="text-input">
-            <input name="email2" type="email">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.password")</div>
-        <div class="text-input">
-            <input name="password" type="password">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.password2")</div>
-        <div class="text-input">
-            <input name="password2" type="password">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.account.name")</div>
-        <div class="text-input">
-            <input name="name">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.account.lastName")</div>
-        <div class="text-input">
-            <input name="lastName">
-        </div>
-
-        <div class="paramLabel">@messages("registration.company.account.id")</div>
-        <div class="text-input">
-            <input name="accountId">
-        </div>
-
-        <button type="submit">@messages("registration.button.submit")</button>
-        <button href="/companies">@messages("registration.button.cancel")</button>
-
-    }
-
-}
+    </body>
+</html>

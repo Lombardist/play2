@@ -3,23 +3,21 @@
 # ~~~~
 
 #Login page
-GET         /login                  @controllers.Authenticator.login
-POST        /login                  @controllers.Authenticator.auth
+GET         /login                     @controllers.Authenticator.login
+POST        /login                     @controllers.Authenticator.auth
 
 # Home page
 
-GET         /registration           @controllers.registration.Registration.registrationView
-POST        /registration           @controllers.registration.Registration.registrationSubmit
+GET         /                          @controllers.Index.index
 
-GET         /companies              @controllers.company.Companies.list
-GET         /companies.json         @controllers.company.Companies.companiesJson
-GET         /companies/new          @controllers.company.Companies.newCompany
-GET         /companies/:id          @controllers.company.Companies.companyJson(id: Int)
-POST        /companies              @controllers.company.Companies.add
+GET         /registration              @controllers.registration.Registration.registrationView
+POST        /registration              @controllers.registration.Registration.registrationSubmit
+GET         /registration/:hash        @controllers.registration.Registration.registrationContinue(hash: String)
 
-GET         /warehouses.json        @controllers.warehouse.Warehouses.warehousesListJson
-GET         /warehouses             @controllers.warehouse.Warehouses.warehouses
+GET         /companies                 @controllers.company.Companies.list
+GET         /companies.json            @controllers.company.Companies.companiesJson
+GET         /companies/:id             @controllers.company.Companies.companyJson(id: Int)
 
 # Map static resources from the /public folder to the /assets URL path
 #GET         /assets/*file           @controllers.Assets.versioned(path="/public", file: Asset)
-GET         /*file                  @controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file                     @controllers.Assets.versioned(path="/public", file: Asset)

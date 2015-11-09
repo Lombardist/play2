@@ -1,18 +1,17 @@
 package models.entities
 
-import javax.inject.Inject
-
 import com.mongodb.DBObject
 import com.mongodb.casbah.commons.MongoDBObject
 import db.{Collections, DefaultDbConfig}
-import net.sf.ehcache.Cache
-import play.api.cache.{EhCacheApi, CacheApi}
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
 import scala.collection.{mutable, immutable}
 
-case class Warehouse(_id: Int = DefaultDbConfig.nextId(Collections.warehouse), name: String, companyId: Int)
+case class Warehouse(name: String,
+                     companyId: Int) {
+  var _id: Int = DefaultDbConfig.nextId(Collections.warehouse)
+}
 
 object Warehouse {
 
@@ -23,7 +22,6 @@ object Warehouse {
   object JsonMapper {
 
     implicit val warehouseFormat: Format[Warehouse] = (
-      (__ \ _id).format[Int] ~
         (__ \ name).format[String] ~
         (__ \ companyId).format[Int]
       ) (Warehouse.apply, unlift(Warehouse.unapply))
@@ -41,39 +39,17 @@ object Warehouse {
     }
 
     def fromDBObject(obj: DBObject) = {
-      Warehouse(
-        _id = obj.get(_id).asInstanceOf[Int],
+      val warehouse = Warehouse(
         name = obj.get(name).asInstanceOf[String],
         companyId = obj.get(companyId).asInstanceOf[Int]
       )
+      warehouse._id = obj.get(_id).asInstanceOf[Int]
+      warehouse
     }
   }
 
-}
+  object WarehouseDAO {
 
-object WarehouseDAO {
-
-  def list = {
-    DefaultDbConfig.warehouse.find.map { elem =>
-      Warehouse.MongoMapper.fromDBObject(elem)
-    }.toList
-  }
-
-  def getById(id: Int) = {
-    val query = MongoDBObject("_id" -> id)
-    DefaultDbConfig.warehouse.findOne(query) match {
-      case Some(value) => Warehouse.MongoMapper.fromDBObject(value)
-      case None => null
-    }
-  }
-
-  def save(obj: Warehouse) = {
-    val query = MongoDBObject("name" -> obj.name)
-    DefaultDbConfig.warehouse.findOne(query) match {
-      case Some(value) => throw new Exception
-      case None =>
-        DefaultDbConfig.warehouse.insert(Warehouse.MongoMapper.toDBObject(obj))
-    }
   }
 
 }
